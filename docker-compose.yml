@@ -1,0 +1,26 @@
+version: '3'
+services:
+  laravel:
+    build:
+      context: .
+      dockerfile: laravel/Dockerfile
+    volumes:
+      - ./src-laravel:/var/www/html
+    # env_file:
+    #   - .env
+    ports:
+      - "127.0.2.60:8000:8000"
+
+  next:
+    build:
+      context: .
+      dockerfile: next/Dockerfile
+    volumes:
+      - ./src-next:/app
+    # env_file:
+    #   - .env
+    command: npm run dev
+    ports:
+      - "127.0.2.60:3000:3000"
+    depends_on:
+      - laravel
